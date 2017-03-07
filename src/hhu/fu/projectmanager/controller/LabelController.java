@@ -35,7 +35,7 @@ public class LabelController {
 		return "label/add";
 	}
 	@RequestMapping("/all")
-	public String labels(Model model){
+	public String all(Model model){
 		List<Label> labels = labelDAO.findAll();
 		model.addAttribute("labels", labels);
 		return "label/all";

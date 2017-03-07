@@ -1,5 +1,6 @@
 package hhu.fu.projectmanager.entity;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -28,7 +29,7 @@ public class User {
 	private String email;		//电子邮箱
 	private Integer lvl;	//0 is student , 1 is teacher , 2 is admin 
 	@ManyToMany
-	private Set<Label> labels;
+	private List<Label> labels;
 	public Integer getUid() {
 		return uid;
 	}
@@ -82,5 +83,8 @@ public class User {
 	}
 	public void setLvl(Integer lvl) {
 		this.lvl = lvl;
+	}
+	public void addLabel(Label label){
+		this.labels.add(label);
 	}
 }
