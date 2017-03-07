@@ -1,4 +1,6 @@
-package hhu.fu.projectmanager.entity;
+package hhu.fu.projectmanager.entity.dao;
+
+import hhu.fu.projectmanager.entity.Label;
 
 import java.util.List;
 

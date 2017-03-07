@@ -3,7 +3,7 @@ package hhu.fu.projectmanager.controller;
 import java.util.List;
 
 import hhu.fu.projectmanager.entity.Label;
-import hhu.fu.projectmanager.entity.LabelDAO;
+import hhu.fu.projectmanager.entity.dao.LabelDAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
