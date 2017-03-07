@@ -10,6 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>大学生课外管理系统</title>
 <base href="<%=basePath%>">
+<base href="<%=basePath%>">
 </head>
 <body>
 	
