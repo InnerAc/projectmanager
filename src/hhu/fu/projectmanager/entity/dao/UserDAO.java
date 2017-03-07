@@ -36,7 +36,7 @@ public class UserDAO extends BaseDAO<User>{
 	public void addLabel(int uid,Label label){
 		User user = findById(uid);
 		user.addLabel(label);
-//		init();
+		tran = session.beginTransaction();
 		session.update(user);
 		tran.commit();
 	}

@@ -87,4 +87,11 @@ public class User {
 	public void addLabel(Label label){
 		this.labels.add(label);
 	}
+	public List<Label> getLabels() {
+		return labels;
+	}
+	public void setLabels(List<Label> labels) {
+		this.labels = labels;
+	}
+	
 }
