@@ -1,5 +1,6 @@
 package hhu.fu.projectmanager.entity;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -31,7 +32,7 @@ public class Project {
 	@ManyToOne
 	private User teacher;		//审批人
 	@ManyToMany
-	private Set<Label> labels;	//项目标签
+	private List<Label> labels;	//项目标签
 	public Integer getPid() {
 		return pid;
 	}
@@ -104,10 +105,13 @@ public class Project {
 	public void setTeacher(User teacher) {
 		this.teacher = teacher;
 	}
-	public Set<Label> getLabels() {
+	public List<Label> getLabels() {
 		return labels;
 	}
-	public void setLabels(Set<Label> labels) {
+	public void setLabels(List<Label> labels) {
 		this.labels = labels;
+	}
+	public void addLabel(Label label){
+		labels.add(label);
 	}
 }

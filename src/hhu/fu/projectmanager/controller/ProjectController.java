@@ -1,5 +1,8 @@
 package hhu.fu.projectmanager.controller;
 
+import java.util.List;
+
+import hhu.fu.projectmanager.entity.Label;
 import hhu.fu.projectmanager.entity.Project;
 import hhu.fu.projectmanager.entity.User;
 import hhu.fu.projectmanager.entity.dao.LabelDAO;
@@ -26,7 +29,9 @@ public class ProjectController {
 	@RequestMapping("{pid}")
 	public String index(@PathVariable int pid,Model model){
 		Project project = projectDAO.findById(pid);
+		List<Label> labels = labelDAO.findAll();
 		model.addAttribute("project",project);
+		model.addAttribute("labels", labels);
 		return "project/info";
 	}
 	@RequestMapping(value="{uid}/add",method = RequestMethod.GET)
@@ -39,5 +44,11 @@ public class ProjectController {
 		project.setManager(user);
 		projectDAO.insert(project);
 		return "project/add";
+	}
+	
+	@RequestMapping("adl/{pid}/{lid}")
+	public void addLabel(@PathVariable int pid,@PathVariable int lid){
+		Label label = labelDAO.findById(lid);
+		projectDAO.addLabel(pid, label);
 	}
 }

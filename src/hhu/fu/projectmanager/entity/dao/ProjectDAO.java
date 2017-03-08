@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import hhu.fu.projectmanager.entity.Label;
 import hhu.fu.projectmanager.entity.Project;
 @Repository("projectDAO")
 public class ProjectDAO extends BaseDAO<Project>{
@@ -30,6 +31,14 @@ public class ProjectDAO extends BaseDAO<Project>{
 		init();
 		Query<Project> projects = session.createQuery(hsql,Project.class).setParameter(0, name);
 		return projects.list();
+	}
+
+	public void addLabel(int pid, Label label) {
+		Project project = findById(pid);
+		project.addLabel(label);
+		tran = session.beginTransaction();
+		session.update(project);
+		tran.commit();
 	}
 	
 }
