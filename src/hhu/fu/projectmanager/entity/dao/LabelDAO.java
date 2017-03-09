@@ -15,17 +15,15 @@ import org.springframework.stereotype.Repository;
 public class LabelDAO extends BaseDAO<Label>{
 	@Override
 	public List<Label> findAll(){
-		init();
+		open();
 		Query<Label> labels = session.createQuery("from Label", Label.class);
-		tran.commit();
 		return labels.list();
 	}
 
 	@Override
 	public Label findById(int lid) {
-		init();
+		open();
 		Label label = session.get(Label.class, lid);
-		tran.commit();
 		return label;
 	}
 }

@@ -15,23 +15,30 @@ public abstract class BaseDAO<T> {
 	
 	Class<T> tcalss;
 	
-	public void init(){
-		session = sessionFactory.openSession();
+	public void begin(){
 		tran = session.beginTransaction();
 	}
 	
-	public void insert(T t){
-		init();
-		session.save(t);
+	public void open(){
+		session = sessionFactory.openSession();
+	}
+	public void commit(){
 		tran.commit();
+	}
+	
+	public void insert(T t){
+		begin();
+		session.save(t);
+		commit();
 	}
 	
 	public abstract T findById(int id);
 	
 	public void update(T t){
-		init();
+		open();
+		begin();
 		session.update(t);
-		tran.commit();
+		commit();
 	}
 	
 	public abstract List<T> findAll();

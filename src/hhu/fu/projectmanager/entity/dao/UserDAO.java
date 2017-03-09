@@ -13,39 +13,48 @@ public class UserDAO extends BaseDAO<User>{
 
 	@Override
 	public List<User> findAll() {
-		init();
+		open();
 		Query<User> users = session.createQuery("from User", User.class);
-		tran.commit();
 		return users.list();
 	}
 	
 	public User findByName(String uname){
 		String hql="from User where userid=?";
-		init();
+		open();
 		User user = session.createQuery(hql,User.class).setParameter(0,uname).uniqueResult();
 		return user;
 	}
 	
-	public void addLabel(User user,Label label){
-		init();
-		user.addLabel(label);
-		session.update(user);
-		tran.commit();
-	}
 	
+	/**
+	 * 给用户打标签
+	 * @param uid
+	 * @param label
+	 */
 	public void addLabel(int uid,Label label){
 		User user = findById(uid);
 		user.addLabel(label);
-		tran = session.beginTransaction();
+		begin();
 		session.update(user);
-		tran.commit();
+		commit();
 	}
 
 	@Override
 	public User findById(int uid) {
-		init();
+		open();
 		User user = session.get(User.class, uid);
-		tran.commit();
 		return user;
+	}
+	
+	/**
+	 * 修改用户级别
+	 * @param uid
+	 * @param lvl
+	 */
+	public void updateLvl(int uid,int lvl){
+		User user = findById(uid);
+		begin();
+		user.setLvl(lvl);
+		commit();
 	}
 }
