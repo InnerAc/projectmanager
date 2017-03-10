@@ -20,6 +20,7 @@ public class Project {
 	
 	private String pname;	//项目名
 	private String pdesc;	//项目简介
+	private String poster;	//项目海报
 	private Long stdate;	//起始日期
 	private Long endate;	//结束日期
 	private String local;	//活动地点
@@ -114,4 +115,11 @@ public class Project {
 	public void addLabel(Label label){
 		labels.add(label);
 	}
+	public String getPoster() {
+		return poster;
+	}
+	public void setPoster(String poster) {
+		this.poster = poster;
+	}
+	
 }

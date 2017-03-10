@@ -26,5 +26,9 @@
 		<p>${me.username }</p>
 		<a href="user/logout">登出</a>
 	</c:if>
+	<form action="upload" enctype="multipart/form-data" method=POST>
+		<input type="file" name="file">
+		<button type="submit">上传</button>
+	</form>
 </body>
 </html>

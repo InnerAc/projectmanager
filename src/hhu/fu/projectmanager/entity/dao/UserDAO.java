@@ -18,6 +18,23 @@ public class UserDAO extends BaseDAO<User>{
 		return users.list();
 	}
 	
+	public List<User> findByIds(List<Integer> uids){
+		open();
+		String hql = "from User where uid=";
+		boolean one = true;
+		for(Integer uid : uids){
+			if(one){
+				hql += uid;
+				one = false;
+			}else{
+				hql += " or uid="+uid;
+			}
+		}
+		System.out.println(hql);
+		Query<User> users = session.createQuery(hql, User.class);
+		return users.list();
+	}
+	
 	public User findByName(String uname){
 		String hql="from User where userid=?";
 		open();
@@ -55,6 +72,20 @@ public class UserDAO extends BaseDAO<User>{
 		User user = findById(uid);
 		begin();
 		user.setLvl(lvl);
+		session.update(user);
+		commit();
+	}
+	
+	/**
+	 * 更改头像信息
+	 * @param uid
+	 * @param avatar
+	 */
+	public void updataAvatar(int uid,String avatar){
+		User user = findById(uid);
+		begin();
+		user.setAvatar(avatar);
+		session.update(user);
 		commit();
 	}
 }

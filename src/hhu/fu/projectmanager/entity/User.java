@@ -27,6 +27,7 @@ public class User {
 	private String sex;			//性别
 	private String phone;		//手机号
 	private String email;		//电子邮箱
+	private String avatar;		//头像
 	private Integer lvl;	//0 is student , 1 is teacher , 2 is admin 
 	@ManyToMany
 	private List<Label> labels;
@@ -92,6 +93,12 @@ public class User {
 	}
 	public void setLabels(List<Label> labels) {
 		this.labels = labels;
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 	
 }
