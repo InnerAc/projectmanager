@@ -20,11 +20,5 @@
 	<p>${user.sex }</p>
 	<p>${user.phone }</p>
 	<p><c:forEach items="${user.labels }" var="ul">${ul.lname },</c:forEach></p>
-	<hr>
-	<c:forEach items="${labels }" var="label">
-		<a href="user/adl/${user.uid }/${label.lid}">${label.lname }</a>
-	</c:forEach>
-	<hr>
-	<a href="project/${user.uid }/add">创建项目</a>
 </body>
 </html>

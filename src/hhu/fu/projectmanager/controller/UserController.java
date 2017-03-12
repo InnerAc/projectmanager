@@ -36,14 +36,20 @@ public class UserController {
 		return "user/info";
 	}
 
-	@RequestMapping("me")
-	public String me(Model model){
-		Object me = model.asMap().get("me");
+	@RequestMapping("/me")
+	public String me(Model model,HttpSession session){
+		System.out.println("welcome to me");
+		Object me = session.getAttribute("me");
+		System.out.println(model.asMap());
 		if(me == null){
 			model.addAttribute("info","请先登录");
 			model.addAttribute("url", "");
-			return "error/errot";
+			return "error/errto";
 		}
+		List<Label> labels = labelDAO.findAll();
+		model.addAttribute("labels", labels);
+		System.out.println(me);
+		System.out.println("xxx");
 		return "user/me";
 	}
 	
@@ -70,6 +76,30 @@ public class UserController {
 		}
 		return "error/errto";
 	}
+	
+	@RequestMapping(value="/edit",method = RequestMethod.GET)
+	public String edit(Model model,HttpSession session){
+		Object me = session.getAttribute("me");
+		if(me == null){
+			model.addAttribute("me", null);
+			model.addAttribute("info", "请先登录");
+			model.addAttribute("url", "");
+			return "error/errto";
+		}
+		return "user/edit";
+	}
+	@RequestMapping(value="/edit",method = RequestMethod.POST)
+	public String edit(User user,Model model,HttpSession session){
+		User me = (User) session.getAttribute("me");
+		me.setStunum(user.getStunum());
+		me.setUsername(user.getUsername());
+		me.setPhone(user.getPhone());
+		me.setEmail(user.getEmail());
+		model.addAttribute("info", "修改成功");
+		model.addAttribute("url", "user/me");
+		return "user/edit";
+	}
+	
 	@RequestMapping(value="login",method = RequestMethod.POST)
 	public String login(String userid,String password,Model model,HttpSession session){
 		User user = userDAO.findByName(userid);

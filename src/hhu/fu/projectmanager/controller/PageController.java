@@ -33,8 +33,8 @@ public class PageController {
 	ProjectDAO projectDAO;
 	
 	@RequestMapping("/")
-	public String index(Model model){
-		Object me = model.asMap().get("me");
+	public String index(Model model,HttpSession session){
+		Object me = session.getAttribute("me");
 		if(me == null){
 			model.addAttribute("me", null);
 		}

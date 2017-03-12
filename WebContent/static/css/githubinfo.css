@@ -1,0 +1,67 @@
+.header{
+	padding-top: 16px;
+	padding-bottom: 16px;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+.github_nav{
+	font-size: 16px;
+}
+.header span{
+	float: left;
+	display:block;
+	padding-top:12px;
+	padding-right:5%;  
+	font-weight:bold;
+}
+
+.main{
+	padding-top: 16px;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+.info_ul{
+	list-style:none;
+	padding-left:0;
+}
+.info_ul span{
+	color: #999;
+}
+.info_ul li{
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	overflow:hidden;
+}
+
+.repo_left{
+	padding-left: 0;
+}
+.repo_right{
+	padding-left: 0;
+}
+.destr{
+	display:block;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	color: #999;
+	font-size: 12px;
+	height:54px;
+	overflow:hidden; 
+	text-overflow:ellipsis; 
+	word-break:keep-all; 
+}
+.divCarousel{
+	overflow: hidden;
+}
+.divProject div{
+	height:100%;
+	overflow: hidden;
+	text-overflow:ellipsis; 
+}
+.divLoginPop{
+	display:none;
+	top:10%;
+	left:60%;
+	position: absolute;
+	z-index:999;
+}
