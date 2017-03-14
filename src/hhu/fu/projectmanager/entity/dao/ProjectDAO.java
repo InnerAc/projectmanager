@@ -64,13 +64,30 @@ public class ProjectDAO extends BaseDAO<Project>{
 	}
 	
 	public List<Project> findByName(String name){
-		String hsql = "from Project where pname like %?%";
+		String hql = "from Project where pname like %?%";
 		open();
-		Query<Project> projects = session.createQuery(hsql,Project.class).setParameter(0, name);
+		Query<Project> projects = session.createQuery(hql,Project.class).setParameter(0, name);
+		return projects.list();
+	}
+	
+	public List<Project> findByNameUser(String name,User user){
+		String hql = "from Project where pname like %?% and manager=?";
+		open();
+		Query<Project> projects = session.createQuery(hql,Project.class).setParameter(0, name).setParameter(1, user);
+		return projects.list();
+	}
+	
+	public List<Project> findByUser(User user){
+		String hql = "from Project where manager=?";
+		open();
+		Query<Project> projects = session.createQuery(hql,Project.class).setParameter(0, user);
 		return projects.list();
 	}
 
 	public List<Project> findByIds(List<Integer> pids){
+		if(pids == null || pids.size() ==0){
+			return null;
+		}
 		open();
 		String hql = "from Project where pid=";
 		boolean one = true;

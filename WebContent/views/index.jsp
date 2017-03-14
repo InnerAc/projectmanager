@@ -17,7 +17,7 @@
 <body>
 	<div class="header" float="left">
 		<div class="col-md-1">
-			<a href=""><img class="img-responsive" src="static/image/logo.png" width="45px;"></a>
+			<img class="img-responsive" src="static/image/logo.png" width="45px;">
 		</div>
 		<div class="col-md-6 github_nav">
 			<span>大学生课外项目管理系统</span>
@@ -30,7 +30,7 @@
 			<button type="submit" class="btn btn-default">搜索</button>
 		</form>
 		</div>
-		<div class="col-md-2">
+		<div class="col-md-2 github_nav" style="float:right;">
 			<c:if test="${me==null }">
 				<button onclick="login();" class="btn btn-info">登录</button>
 				<button class="btn btn-success">注册</button>
@@ -40,7 +40,9 @@
 				<span><a href="user/logout">登出</a></span>
 			</c:if>
 		</div>
-		<div class="col-md-4 divLoginPop">
+	</div>
+	<br>
+	<div class="col-md-4 divLoginPop">
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<form action="user/login" method="post">
@@ -62,8 +64,9 @@
 				</form>
 				</div>
 			</div>
-	</div><br>
+			</div>
 	<hr>
+	
 	<div class="main">
 		<div class="row">
 			<div class="col-md-12">
@@ -94,131 +97,51 @@
 		</div>
 		<hr>
 		<div class="row">
+		
+			<c:forEach items="${projects }" var="project">
 			<div class="col-md-6">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<a href="#">计算机设计大赛</a>
+						<a target="_blank" href="project/info/${project.pid }">${project.pname }</a>
 					</div>
 					<div class="panel-body divProject">
 						<div class="col-md-6">
 							<img class="img-responsive" src="static/image/2.jpg">
 						</div>
 						<div class="col-md-6">
-							<label>举办人：张三</label><br>
-							<label>活动日期：2017-05-01 12:00:00</label><br>
-							<label>参与方式：需要批准</label><br>
-							<label>参与人数：12/50</label><br>
+							<label>举办人：${project.manager.username }</label><br>
+							<label>活动日期：${project.stdate }</label><br>
+							<label>参与方式：
+								<c:if test="${project.isjoin }">需要批准</c:if>
+								<c:if test="${!project.isjoin }">无需批准</c:if>
+							</label><br>
+							<label>参与人数：${project.joinnum }/${project.allnum }</label><br>
 							<span>
-								河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介，河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介
-								河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介，河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介
-								河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介，河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介
+								${project.pdesc }
 							</span>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<a href="#">计算机设计大赛</a>
-					</div>
-					<div class="panel-body divProject">
-						<div class="col-md-6">
-							<img class="img-responsive" src="static/image/2.jpg">
-						</div>
-						<div class="col-md-6">
-							<label>举办人：张三</label><br>
-							<label>活动日期：2017-05-01 12:00:00</label><br>
-							<label>参与方式：需要批准</label><br>
-							<label>参与人数：12/50</label><br>
-							<span>
-								河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介，河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介
-								河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介，河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介
-								河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介，河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<a href="#">计算机设计大赛</a>
-					</div>
-					<div class="panel-body divProject">
-						<div class="col-md-6">
-							<img class="img-responsive" src="static/image/2.jpg">
-						</div>
-						<div class="col-md-6">
-							<label>举办人：张三</label><br>
-							<label>活动日期：2017-05-01 12:00:00</label><br>
-							<label>参与方式：需要批准</label><br>
-							<label>参与人数：12/50</label><br>
-							<span>
-								河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介，河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介
-								河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介，河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介
-								河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介，河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<a href="#">计算机设计大赛</a>
-					</div>
-					<div class="panel-body divProject">
-						<div class="col-md-6">
-							<img class="img-responsive" src="static/image/2.jpg">
-						</div>
-						<div class="col-md-6">
-							<label>举办人：张三</label><br>
-							<label>活动日期：2017-05-01 12:00:00</label><br>
-							<label>参与方式：需要批准</label><br>
-							<label>参与人数：12/50</label><br>
-							<span>
-								河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介，河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介
-								河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介，河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介
-								河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介，河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<a href="#">计算机设计大赛</a>
-					</div>
-					<div class="panel-body divProject">
-						<div class="col-md-6">
-							<img class="img-responsive" src="static/image/2.jpg">
-						</div>
-						<div class="col-md-6">
-							<label>举办人：张三</label><br>
-							<label>活动日期：2017-05-01 12:00:00</label><br>
-							<label>参与方式：需要批准</label><br>
-							<label>参与人数：12/50</label><br>
-							<span>
-								河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介，河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介
-								河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介，河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介
-								河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介，河海大学计算机设计大赛是一个非常有意义的活动，大赛简介，大赛简介，大赛简介
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
+			</c:forEach>
+			
+
 			<div class="col-md-12">
 			<center>
 			<ul class="pagination">
-				<li><a href="#">&laquo;</a></li>
-				<li class="active"><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">&raquo;</a></li>
+				<c:if test="!${page eq 1 }">
+				<li><a href="?p=${page-1 }">&laquo;</a></li>
+				</c:if>
+				<c:forEach var="p" begin="1" end="${pages }" step="1">
+					<li
+					<c:if test="${p eq page}">
+						class="active"
+					</c:if>
+					><a href="?p=${p }">${p }</a></li>
+				</c:forEach>
+				<c:if test="!${page eq pages }">
+					<li><a href="?p=${page+1 }">&raquo;</a></li>
+				</c:if>
 			</ul>
 			</center>
 			</div>

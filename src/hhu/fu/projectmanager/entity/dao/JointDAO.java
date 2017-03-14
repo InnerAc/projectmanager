@@ -3,9 +3,11 @@ package hhu.fu.projectmanager.entity.dao;
 import java.util.List;
 
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import hhu.fu.projectmanager.entity.JoinT;
 
+@Repository("jointDAO")
 public class JointDAO extends BaseDAO<JoinT>{
 
 	@Override

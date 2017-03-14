@@ -4,9 +4,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import hhu.fu.projectmanager.entity.JoinT;
 import hhu.fu.projectmanager.entity.Label;
+import hhu.fu.projectmanager.entity.Project;
 import hhu.fu.projectmanager.entity.User;
+import hhu.fu.projectmanager.entity.dao.JointDAO;
 import hhu.fu.projectmanager.entity.dao.LabelDAO;
+import hhu.fu.projectmanager.entity.dao.ProjectDAO;
 import hhu.fu.projectmanager.entity.dao.UserDAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,11 @@ public class UserController {
 	LabelDAO labelDAO;
 	@Autowired
 	UserDAO userDAO;
+	@Autowired
+	ProjectDAO projectDAO;
+	@Autowired
+	JointDAO jointDAO;
+	
 	
 	@RequestMapping("info/{uname}")
 	public String index(@PathVariable String uname,Model model){
@@ -46,10 +55,25 @@ public class UserController {
 			model.addAttribute("url", "");
 			return "error/errto";
 		}
+		User user = (User) me;
 		List<Label> labels = labelDAO.findAll();
 		model.addAttribute("labels", labels);
-		System.out.println(me);
-		System.out.println("xxx");
+		//Get manager
+		List<Project> mpros = projectDAO.findByUser(user);
+		List<Integer> pids = jointDAO.findByUser(user.getUid());
+		List<Project> jpros = projectDAO.findByIds(pids);
+		model.addAttribute("mpros", mpros);
+		model.addAttribute("jpros", jpros);
+		int mnum = 0;
+		int jnum = 0;
+		if(mpros != null){
+			mnum = mpros.size();
+		}
+		if(jpros != null){
+			jnum = jpros.size();
+		}
+		model.addAttribute("mnum", mnum);
+		model.addAttribute("jnum", jnum);
 		return "user/me";
 	}
 	

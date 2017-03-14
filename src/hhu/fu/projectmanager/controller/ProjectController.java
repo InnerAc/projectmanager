@@ -26,7 +26,7 @@ public class ProjectController {
 	@Autowired
 	UserDAO userDAO;
 	
-	@RequestMapping("{pid}")
+	@RequestMapping("info/{pid}")
 	public String index(@PathVariable int pid,Model model){
 		Project project = projectDAO.findById(pid);
 		List<Label> labels = labelDAO.findAll();
@@ -50,5 +50,13 @@ public class ProjectController {
 	public void addLabel(@PathVariable int pid,@PathVariable int lid){
 		Label label = labelDAO.findById(lid);
 		projectDAO.addLabel(pid, label);
+	}
+	
+	@RequestMapping("all")
+	public String all(Model model){
+		List<Project> projects = projectDAO.findAll();
+		System.out.println(projects.size());
+		model.addAttribute("projects", projects);
+		return "project/all";
 	}
 }

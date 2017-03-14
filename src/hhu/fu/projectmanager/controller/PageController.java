@@ -33,11 +33,23 @@ public class PageController {
 	ProjectDAO projectDAO;
 	
 	@RequestMapping("/")
-	public String index(Model model,HttpSession session){
+	public String index(Model model,HttpSession session,String p){
+		int page = 1;
+		try {
+			page = Integer.parseInt(p);
+		} catch (Exception e) {
+			page = 1;
+		}
 		Object me = session.getAttribute("me");
 		if(me == null){
 			model.addAttribute("me", null);
 		}
+		List<Project> projects = projectDAO.findForPageByDate(page-1, 6, true);
+		int ps = projects.size();
+		model.addAttribute("projects", projects);
+		model.addAttribute("page", page);
+		int pages = (ps-1)/6 +1;
+		model.addAttribute("pages", pages);
 		return "index";
 	}
 	
