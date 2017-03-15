@@ -68,19 +68,19 @@
 	</ul>
 	<div class="tab-content" style="margin-top:24px;">
 		<div class="tab-pane fade in active" id="manager">
-			<p style="font-size:20px;"><a target="_blank" href="#" class="btn btn-default">申请新项目<span class="glyphicon glyphicon-open-file"></span></a></p>
+			<p style="font-size:20px;"><a target="_blank" href="project/${me.uid }/add" class="btn btn-default">申请新项目<span class="glyphicon glyphicon-open-file"></span></a></p>
 			
 			<c:forEach items="${mpros }" var="mpro">
-			<div class="col-md-4 repo_left">
+			<div class="col-md-4 repo_left" style="margin-bottom:0;">
 			<div class="panel panel-default panel-body">
 				<a href="project/info/${mpro.pid }">${mpro.pname }</a><br>
 				<span>项目状态：${mpro.statu }</span><br>
-				<span>活动日期：${mpro.stdate }</span>
+				<span>活动日期：<time class="time">${mpro.stdate }</time></span>
 				<span class="destr">
 					${mpro.pdesc }
 				</span>
-				<span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-				<c:forEach items="${mpro.labels }" var="ul">${ul.lname },</c:forEach>
+				<span class="glyphicon glyphicon-tags" aria-hidden="true" style="font-size:16px;"></span>
+				<span>&nbsp <c:forEach items="${mpro.labels }" var="ul">${ul.lname },</c:forEach></span>
 			</div>
 			</div>
 			</c:forEach>
@@ -96,7 +96,7 @@
 					${jpro.pdesc }
 				</span>
 				<span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-				<c:forEach items="${jpro.labels }" var="ul">${ul.lname },</c:forEach>
+				<span>&nbsp <c:forEach items="${mpro.labels }" var="ul">${ul.lname },</c:forEach></span>
 			</div>
 			</div>
 			</c:forEach>
@@ -106,5 +106,16 @@
 	</div>
 	<script type="text/javascript" src="static/js/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src="static/comp/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script>
+		var times = $('time');
+		var tn = times.length;
+		for(var i=0;i<tn;i++){
+			var time = $(times[i]);
+			console.log('time = '+time.html());
+			var nd = new Date(time.html()*1000).toLocaleString().replace(/:\d{1,2}$/,' ').replace(/..午/,' ');
+			console.log(nd);
+			time.html(nd);
+		}
+	</script>
 </body>
 </html>

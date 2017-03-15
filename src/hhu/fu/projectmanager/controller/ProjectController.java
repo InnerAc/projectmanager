@@ -40,10 +40,13 @@ public class ProjectController {
 	}
 	@RequestMapping(value="{uid}/add",method = RequestMethod.POST)
 	public String add(@PathVariable int uid,Project project){
+		if(project.getIsjoin() == null){
+			project.setIsjoin(false);
+		}
 		User user = userDAO.findById(uid);
 		project.setManager(user);
 		projectDAO.insert(project);
-		return "project/add";
+		return "redirect:/project/info/"+project.getPid();
 	}
 	
 	@RequestMapping("adl/{pid}/{lid}")
