@@ -17,12 +17,14 @@
 </head>
 <body>
 	<div class="header" float="left">
+		<a href="">
 		<div class="col-md-1">
 			<img class="img-responsive" src="static/image/logo.png" width="45px;">
 		</div>
 		<div class="col-md-6 github_nav">
-			<span>大学生课外项目管理系统</span>
+			<span style="color:black;">大学生课外项目管理系统</span>
 		</div>
+		</a>
 		<div class="col-md-2"></div>
 		<div class="col-md-3" style="float:right;">
 		<form class="form-inline" style="padding-top:5px;">
