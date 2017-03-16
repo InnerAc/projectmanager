@@ -45,6 +45,7 @@ public class ProjectController {
 		}
 		User user = userDAO.findById(uid);
 		project.setManager(user);
+		project.setStatu("准备中...");
 		projectDAO.insert(project);
 		return "redirect:/project/info/"+project.getPid();
 	}

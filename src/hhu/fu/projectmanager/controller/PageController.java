@@ -40,15 +40,17 @@ public class PageController {
 		} catch (Exception e) {
 			page = 1;
 		}
+		System.out.println("page = "+page);
 		Object me = session.getAttribute("me");
 		if(me == null){
 			model.addAttribute("me", null);
 		}
 		List<Project> projects = projectDAO.findForPageByDate(page-1, 6, true);
-		int ps = projects.size();
+		long ps = projectDAO.countByJoinableOrIsJoin(false, true);
+		System.out.println("ps ="+ps);
 		model.addAttribute("projects", projects);
 		model.addAttribute("page", page);
-		int pages = (ps-1)/6 +1;
+		long pages = (ps-1)/6 +1;
 		model.addAttribute("pages", pages);
 		return "index";
 	}

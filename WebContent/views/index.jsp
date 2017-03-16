@@ -110,7 +110,7 @@
 						</div>
 						<div class="col-md-6">
 							<label>举办人：${project.manager.username }</label><br>
-							<label>活动日期：${project.stdate }</label><br>
+							<label>活动日期：<time class="time">${project.stdate }</time></label><br>
 							<label>参与方式：
 								<c:if test="${project.isjoin }">需要批准</c:if>
 								<c:if test="${!project.isjoin }">无需批准</c:if>
@@ -129,7 +129,7 @@
 			<div class="col-md-12">
 			<center>
 			<ul class="pagination">
-				<c:if test="!${page eq 1 }">
+				<c:if test="${page != 1 }">
 				<li><a href="?p=${page-1 }">&laquo;</a></li>
 				</c:if>
 				<c:forEach var="p" begin="1" end="${pages }" step="1">
@@ -139,7 +139,7 @@
 					</c:if>
 					><a href="?p=${p }">${p }</a></li>
 				</c:forEach>
-				<c:if test="!${page eq pages }">
+				<c:if test="${page != pages }">
 					<li><a href="?p=${page+1 }">&raquo;</a></li>
 				</c:if>
 			</ul>
@@ -159,6 +159,17 @@
 		}
 		function unLogin(){
 			$(".divLoginPop").hide();
+		}
+	</script>
+	<script type="text/javascript">
+		var times = $('time');
+		var tn = times.length;
+		for(var i=0;i<tn;i++){
+			var time = $(times[i]);
+			console.log('time = '+time.html());
+			var nd = new Date(time.html()*1000).toLocaleString().replace(/:\d{1,2}$/,' ').replace(/..午/,' ');
+			console.log(nd);
+			time.html(nd);
 		}
 	</script>
 </body>

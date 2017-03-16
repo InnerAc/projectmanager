@@ -28,6 +28,25 @@ public class ProjectDAO extends BaseDAO<Project>{
 	}
 	
 	/**
+	 * 根据可申请参加或者是否需要批准查询总数
+	 * @param joinable	joinnum < allnum
+	 * @param isjoin	isjoin
+	 * @return
+	 */
+	public Long countByJoinableOrIsJoin(boolean joinable,boolean isjoin){
+		open();
+		String hql = "select count(*) from Project where statu='准备中...'";
+		if(joinable){
+			hql += " and joinnum < allnum";
+		}
+		if(!isjoin){
+			hql += " and isjoin=false";
+		}
+		Long res = (Long) session.createQuery(hql).uniqueResult();
+		return res;
+	}
+	
+	/**
 	 * 按照日期分页
 	 * @param offset
 	 * @param length
@@ -46,7 +65,7 @@ public class ProjectDAO extends BaseDAO<Project>{
 	}
 	
 	/**
-	 * 按照日期分页
+	 * 按照参与度
 	 * @param offset
 	 * @param length
 	 * @return
