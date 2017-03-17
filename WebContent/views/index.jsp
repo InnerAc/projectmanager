@@ -118,6 +118,7 @@
 								<c:if test="${!project.isjoin }">无需批准</c:if>
 							</label><br>
 							<label>参与人数：${project.joinnum }/${project.allnum }</label><br>
+							<label>标签：<c:forEach items="${project.labels }" var="ul">${ul.lname } </c:forEach></label><br>
 							<span>
 								${project.pdesc }
 							</span>

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -20,6 +21,7 @@ public class Project {
 	private Integer pid;
 	
 	private String pname;	//项目名
+	@Lob
 	private String pdesc;	//项目简介
 	private String poster;	//项目海报
 	private Long stdate;	//起始日期

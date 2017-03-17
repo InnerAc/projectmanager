@@ -40,14 +40,18 @@
 				<c:if test="${!project.isjoin }">无需批准</c:if>
 			</label><br>
 			<label>参与人数：${project.joinnum }/${project.allnum }</label><br>
-			<label>标签：</label><p><c:forEach items="${project.labels }" var="ul"><a class="btn btn-default">${ul.lname }</a></c:forEach></p>
+			<label>标签：</label><p id="tagP"><c:forEach items="${project.labels }" var="ul"><a class="btn btn-default">${ul.lname }</a></c:forEach></p>
 			<hr>
+			<div id="tagBase" style="display:none;">
 			<c:forEach items="${labels }" var="label">
-				<a class="btn btn-default" href="project/adl/${project.pid }/${label.lid}">${label.lname }</a>
+				<a class="btn btn-default" onclick="addTag(${project.pid },${label.lid},this)">${label.lname }</a>
 			</c:forEach>
+			</div>
 		</div>
 		<div class="col-md-2">
-			<button class="btn btn-success">报名</button>
+			<button class="btn btn-success">报名</button><br><br>
+			<button class="btn btn-warning"  data-toggle="modal" data-target="#posterModal">上传海报</button>
+			<button onclick="$('#tagBase').toggle();" class="btn btn-info">添加标签</button><br><br>
 		</div>
 		<div class="col-md-12">
 		<hr>
@@ -56,6 +60,26 @@
 			</span>
 		</div>
 	</div>
+	<div class="modal fade" id="posterModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">上传宣传图片（1张）</h4>
+			</div>
+			<div class="modal-body">
+				<form id="upposter" action="project/${project.pid }/poster" enctype="multipart/form-data" method="POST" target="hidden_frame">
+					<input class="form-control" name="file" type="file">
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button onclick="upposter();" type="button" class="btn btn-primary">提交更改</button>
+			</div>
+		</div>
+	</div>
+	<iframe name="hidden_frame" id="hidden_frame" style="display:none;"></iframe>
+
 	<script type="text/javascript" src="static/js/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src="static/comp/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
@@ -67,6 +91,25 @@
 			var nd = new Date(time.html()*1000).toLocaleString().replace(/:\d{1,2}$/,' ').replace(/..午/,' ');
 			console.log(nd);
 			time.html(nd);
+		}
+	</script>
+	<script type="text/javascript">
+		function upposter(){
+			$('#upposter').submit();
+			$('#posterModal').modal('hide')
+		}
+		function addTag(pid,lid,e){
+			$.ajax({
+				url:'project/adl/'+pid+'/'+lid,
+				success:function(data){
+					var lname = $(e).html();
+					$('#tagP').append('<a class="btn btn-default">'+lname+'</a>');
+					$(e).remove();
+				},
+				error:function(){
+					alert("请不要重复添加！！");
+				}
+			});
 		}
 	</script>
 </body>
