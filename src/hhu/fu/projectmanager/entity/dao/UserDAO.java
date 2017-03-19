@@ -19,6 +19,9 @@ public class UserDAO extends BaseDAO<User>{
 	}
 	
 	public List<User> findByIds(List<Integer> uids){
+		if(uids == null || uids.size() == 0){
+			return null;
+		}
 		open();
 		String hql = "from User where uid=";
 		boolean one = true;

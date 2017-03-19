@@ -24,10 +24,18 @@ public class JointDAO extends BaseDAO<JoinT>{
 		return jts.list();
 	}
 	
-	public List<Integer> findByProject(int pid){
+	public List<Integer> findByProjectApply(int pid){
 		open();
 		begin();
-		String hql = "select uid from JoinT where pid = ?";
+		String hql = "select uid from JoinT where pid = ? and passed = 0";
+		Query<Integer> uids = session.createQuery(hql,Integer.class).setParameter(0, pid);
+		commit();
+		return uids.list();
+	}
+	public List<Integer> findByProjectJoined(int pid){
+		open();
+		begin();
+		String hql = "select uid from JoinT where pid = ? and passed = 1";
 		Query<Integer> uids = session.createQuery(hql,Integer.class).setParameter(0, pid);
 		commit();
 		return uids.list();
@@ -40,6 +48,26 @@ public class JointDAO extends BaseDAO<JoinT>{
 		Query<Integer> pids = session.createQuery(hql,Integer.class).setParameter(0, uid);
 		commit();
 		return pids.list();
+	}
+	
+	public boolean check(int uid,int pid){
+		open();
+		String hql = "from JoinT where uid = ? and pid=?";
+		Query<JoinT> ress = session.createQuery(hql,JoinT.class).setParameter(0, uid).setParameter(1, pid);
+		if(ress.list().size() == 0){
+			return false;
+		}else {
+			return true;
+		}
+		
+	}
+	
+	public void agree(int uid,int pid){
+		open();
+		String hql = "from JoinT where uid = ? and pid=?";
+		JoinT jt = session.createQuery(hql,JoinT.class).setParameter(0, uid).setParameter(1, pid).uniqueResult();
+		jt.setPassed(true);
+		update(jt);
 	}
 
 }

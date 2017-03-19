@@ -14,6 +14,7 @@ public class JoinT {
 	private Integer jid;
 	private Integer pid;
 	private Integer uid;
+	private Boolean passed;
 	public Integer getJid() {
 		return jid;
 	}
@@ -31,6 +32,12 @@ public class JoinT {
 	}
 	public void setUid(Integer uid) {
 		this.uid = uid;
+	}
+	public Boolean getPassed() {
+		return passed;
+	}
+	public void setPassed(Boolean passed) {
+		this.passed = passed;
 	}
 	
 }

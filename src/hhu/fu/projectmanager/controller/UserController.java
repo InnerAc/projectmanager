@@ -98,7 +98,7 @@ public class UserController {
 			model.addAttribute("info","用户名重复!!");
 			model.addAttribute("url", "user/add");
 		}
-		return "error/errto";
+		return "error/success";
 	}
 	
 	@RequestMapping(value="/edit",method = RequestMethod.GET)

@@ -7,9 +7,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import hhu.fu.projectmanager.entity.JoinT;
 import hhu.fu.projectmanager.entity.Label;
 import hhu.fu.projectmanager.entity.Project;
 import hhu.fu.projectmanager.entity.User;
+import hhu.fu.projectmanager.entity.dao.JointDAO;
 import hhu.fu.projectmanager.entity.dao.LabelDAO;
 import hhu.fu.projectmanager.entity.dao.ProjectDAO;
 import hhu.fu.projectmanager.entity.dao.UserDAO;
@@ -33,6 +35,8 @@ public class ProjectController {
 	LabelDAO labelDAO;
 	@Autowired
 	UserDAO userDAO;
+	@Autowired
+	JointDAO jointDAO;
 	
 	@RequestMapping("info/{pid}")
 	public String index(@PathVariable int pid,Model model){
@@ -40,6 +44,16 @@ public class ProjectController {
 		List<Label> labels = labelDAO.findAll();
 		model.addAttribute("project",project);
 		model.addAttribute("labels", labels);
+		
+		List<Integer> uids = jointDAO.findByProjectApply(pid);
+		List<User> users = userDAO.findByIds(uids);
+		model.addAttribute("users", users);
+		
+		List<Integer> juids = jointDAO.findByProjectJoined(pid);
+		List<User> jusers = userDAO.findByIds(juids);
+		model.addAttribute("jusers", jusers);
+		
+		
 		return "project/info";
 	}
 	@RequestMapping(value="{uid}/add",method = RequestMethod.GET)
@@ -54,6 +68,8 @@ public class ProjectController {
 		User user = userDAO.findById(uid);
 		project.setManager(user);
 		project.setStatu("准备中...");
+		project.setJoinnum(0);
+		project.setPoster("defualt.jpg");
 		projectDAO.insert(project);
 		return "redirect:/project/info/"+project.getPid();
 	}
@@ -79,9 +95,57 @@ public class ProjectController {
 	public String poster(@PathVariable int pid,@RequestParam MultipartFile file,HttpSession session,HttpServletRequest  request) throws IllegalStateException, IOException{
 		String fileName = file.getOriginalFilename();
 		String realPath=session.getServletContext().getRealPath("/")+"static/poster/";
-		String path = realPath+fileName;
+		String path = realPath+pid;
 		file.transferTo(new File(path));
-		projectDAO.updatePoster(pid, fileName);
+		projectDAO.updatePoster(pid, pid+"");
 		return "success";
+	}
+	
+	@RequestMapping("apply/{pid}")
+	@ResponseBody
+	public String apply(@PathVariable int pid,HttpSession session){
+		Object obj = session.getAttribute("me");
+		if(obj == null){
+			return "请登录";
+		}
+		User me = (User)obj;
+		if(jointDAO.check(me.getUid(), pid)){
+			return "已报名";
+		}else {
+			Project project = projectDAO.findById(pid);
+			JoinT joinT = new JoinT();
+			joinT.setUid(me.getUid());
+			joinT.setPid(pid);
+			if(project.getIsjoin()){
+				joinT.setPassed(false);
+				jointDAO.insert(joinT);
+			}else {
+				joinT.setPassed(true);
+				jointDAO.insert(joinT);
+				project.joinOne();
+				projectDAO.update(project);
+			}
+		}
+		return "0";
+	}
+	@RequestMapping("join/{pid}/{uid}")
+	@ResponseBody
+	public String join(@PathVariable int pid,@PathVariable int uid,HttpSession session){
+		Object obj = session.getAttribute("me");
+		if(obj == null){
+			return "请登录";
+		}
+		User me = (User)obj;
+		Project project = projectDAO.findById(pid);
+		if(me.getUid() != project.getManager().getUid()){
+			return "请使用管理该项目的账户登录";
+		}
+		if(project.getJoinnum() == project.getAllnum()){
+			return "人员已满";
+		}
+		jointDAO.agree(uid, pid);
+		project.joinOne();
+		projectDAO.update(project);
+		return "0";
 	}
 }

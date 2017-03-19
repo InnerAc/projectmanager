@@ -37,7 +37,7 @@ public abstract class BaseDAO<T> {
 	public void update(T t){
 		open();
 		begin();
-		session.update(t);
+		session.merge(t);
 		commit();
 	}
 	

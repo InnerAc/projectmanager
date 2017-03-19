@@ -20,10 +20,11 @@
 		<div class="col-md-1">
 			<img class="img-responsive" src="static/image/logo.png" width="45px;">
 		</div>
-		<div class="col-md-6 github_nav">
+		<div class="col-md-2 github_nav">
 			<span style="color:black;">大学生课外项目管理系统</span>
 		</div>
 		</a>
+		<div class="col-md-4"></div>
 		<div class="col-md-3">
 		<form class="form-inline" style="padding-top:5px;">
 			<div class="form-group">
@@ -152,28 +153,13 @@
 	</div>
 	<script type="text/javascript" src="static/js/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src="static/comp/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="static/js/pm.js"></script>
 	<script type="text/javascript">
 		$(".divCarousel").height($(".divCarousel").width()/2);
 		$(".divProject").height($(".divProject").width()/2.5);
 	</script>
-	<script>
-		function login(){
-			$(".divLoginPop").show();
-		}
-		function unLogin(){
-			$(".divLoginPop").hide();
-		}
-	</script>
 	<script type="text/javascript">
-		var times = $('time');
-		var tn = times.length;
-		for(var i=0;i<tn;i++){
-			var time = $(times[i]);
-			console.log('time = '+time.html());
-			var nd = new Date(time.html()*1000).toLocaleString().replace(/:\d{1,2}$/,' ').replace(/..午/,' ');
-			console.log(nd);
-			time.html(nd);
-		}
+		timeChange();
 	</script>
 </body>
 </html>

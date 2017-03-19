@@ -124,5 +124,7 @@ public class Project {
 	public void setPoster(String poster) {
 		this.poster = poster;
 	}
-	
+	public void joinOne(){
+		this.joinnum++;
+	}
 }
