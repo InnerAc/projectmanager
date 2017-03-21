@@ -36,7 +36,7 @@
 		<div class="col-md-2 github_nav" style="float:right;">
 			<c:if test="${me==null }">
 				<button onclick="login();" class="btn btn-info">登录</button>
-				<button class="btn btn-success">注册</button>
+				<a href="user/add" class="btn btn-success">注册</a>
 			</c:if>
 			<c:if test="${me!=null }">
 				<span><a href="user/me">${me.username }</a></span>

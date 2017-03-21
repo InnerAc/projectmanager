@@ -124,6 +124,7 @@
 				</div>
 			</c:forEach>
 		</div>
+		<c:if test="${me.uid == project.manager.uid }">
 		<hr>
 		<div class="row">
 			<h4>待批准人员</h4>
@@ -141,6 +142,7 @@
 				</div>
 			</c:forEach>
 		</div>
+		</c:if>
 	</div>
 	<div class="modal fade" id="posterModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -159,6 +161,7 @@
 				<button onclick="upposter();" type="button" class="btn btn-primary">提交更改</button>
 			</div>
 		</div>
+	</div>
 	</div>
 	<iframe name="hidden_frame" id="hidden_frame" style="display:none;"></iframe>
 

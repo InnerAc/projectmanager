@@ -1,5 +1,7 @@
 package hhu.fu.projectmanager.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -19,7 +21,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sun.swing.internal.plaf.metal.resources.metal;
 
@@ -91,6 +95,7 @@ public class UserController {
 	public String add(User user,Model model){
 		User i_user = userDAO.findByName(user.getUserid());
 		if(i_user == null){
+			user.setAvatar("avatar.jpg");
 			userDAO.insert(user);
 			model.addAttribute("info", "注册成功");
 			model.addAttribute("url", "");
@@ -119,9 +124,8 @@ public class UserController {
 		me.setUsername(user.getUsername());
 		me.setPhone(user.getPhone());
 		me.setEmail(user.getEmail());
-		model.addAttribute("info", "修改成功");
-		model.addAttribute("url", "user/me");
-		return "user/edit";
+		userDAO.update(me);
+		return "redirect:/user/me";
 	}
 	
 	@RequestMapping(value="login",method = RequestMethod.POST)
@@ -146,10 +150,23 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value="update",method = RequestMethod.POST)
-	public String update(User user,Model model){
+	@RequestMapping(value="avatar",method = RequestMethod.POST)
+	@ResponseBody
+	public String avatar(@RequestParam MultipartFile file,HttpSession session) throws IllegalStateException, IOException{
+		Object me = session.getAttribute("me");
+		if(me == null){
+			return "请登录";
+		}
+		User user = (User) me;
+		String fileName = file.getOriginalFilename();
+		String realPath=session.getServletContext().getRealPath("/")+"static/avatar/";
+		String path = realPath+user.getUserid()+fileName;
+		File img = new File(path);
+		img.deleteOnExit();
+		file.transferTo(img);
+		user.setAvatar(user.getUserid()+fileName);
 		userDAO.update(user);
-		return "user/me";
+		return "success";
 	}
 	
 	

@@ -95,9 +95,12 @@ public class ProjectController {
 	public String poster(@PathVariable int pid,@RequestParam MultipartFile file,HttpSession session,HttpServletRequest  request) throws IllegalStateException, IOException{
 		String fileName = file.getOriginalFilename();
 		String realPath=session.getServletContext().getRealPath("/")+"static/poster/";
-		String path = realPath+pid;
-		file.transferTo(new File(path));
-		projectDAO.updatePoster(pid, pid+"");
+		String path = realPath+pid+fileName;
+		System.out.println(path);
+		File img = new File(path);
+		img.deleteOnExit();
+		file.transferTo(img);
+		projectDAO.updatePoster(pid, pid+fileName);
 		return "success";
 	}
 	

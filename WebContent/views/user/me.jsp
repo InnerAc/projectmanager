@@ -20,12 +20,12 @@
 		<div class="col-md-1">
 			<img class="img-responsive" src="static/image/logo.png" width="45px;">
 		</div>
-		<div class="col-md-6 github_nav">
+		<div class="col-md-2 github_nav">
 			<span style="color:black;">大学生课外项目管理系统</span>
 		</div>
 		</a>
-		<div class="col-md-2"></div>
-		<div class="col-md-3" style="float:right;">
+		<div class="col-md-3"></div>
+		<div class="col-md-3">
 		<form class="form-inline" style="padding-top:5px;">
 			<div class="form-group">
 				<input type="text" class="form-control" placeholder="检索用户项目">
@@ -33,11 +33,28 @@
 			<button type="submit" class="btn btn-default">搜索</button>
 		</form>
 		</div>
+		<div class="col-md-3" style="float:right;margin-top:5px;">
+			<a onclick="login();" class="btn">修改头像</a>
+			<a href="user/edit" class="btn">修改资料</a>
+			<a href="user/logout" class="btn">退出</a>
+		</div>
 	</div><br>
+	<div class="col-md-4 divLoginPop">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<form id="avatarForm" action="user/avatar" enctype="multipart/form-data" method="post" target="hidden_frame">
+					<input class="form-control" name="file" type="file">
+					<br>
+					<a onclick="avatar();" class="btn btn-info">修改</a>
+					<a onclick="unLogin();" class="btn btn-success" >取消</a>
+				</form>
+				</div>
+			</div>
+			</div>
 	<hr>
 	<div class="main">
 	<div class="col-md-2">
-		<a href="#"><img src="static/avatar/${me.avatar }.jpg" class="img-rounded" width="100%"></a>
+		<a href="#"><img src="static/avatar/${me.avatar }" class="img-rounded" width="100%"></a>
 		<h2>${me.username }</h2>
 		<span>
 			<span class="glyphicon glyphicon-tags" aria-hidden="true"></span>&nbsp <c:forEach items="${me.labels }" var="ul">${ul.lname },</c:forEach>
@@ -98,7 +115,7 @@
 					${jpro.pdesc }
 				</span>
 				<span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-				<span>&nbsp <c:forEach items="${mpro.labels }" var="ul">${ul.lname },</c:forEach></span>
+				<span>&nbsp <c:forEach items="${jpro.labels }" var="ul">${ul.lname },</c:forEach></span>
 			</div>
 			</div>
 			</c:forEach>
@@ -108,6 +125,7 @@
 	</div>
 	<script type="text/javascript" src="static/js/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src="static/comp/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="static/js/pm.js"></script>
 	<script>
 		var times = $('time');
 		var tn = times.length;
@@ -117,6 +135,12 @@
 			var nd = new Date(time.html()*1000).toLocaleString().replace(/:\d{1,2}$/,' ').replace(/..午/,' ');
 			console.log(nd);
 			time.html(nd);
+		}
+	</script>
+	<script type="text/javascript">
+		function avatar(){
+			$('#avatarForm').submit();
+			unLogin();
 		}
 	</script>
 </body>
