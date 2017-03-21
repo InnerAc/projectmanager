@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+<%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -11,14 +11,130 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${user.username }</title>
 <base href="<%=basePath%>">
+<link href="static/comp/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="static/css/githubinfo.css" rel="stylesheet">
 </head>
 <body>
-	<%=basePath %>
-	<p>${user.userid }</p>
-	<p>${user.stunum }</p>
-	<p>${user.username }</p>
-	<p>${user.sex }</p>
-	<p>${user.phone }</p>
-	<p><c:forEach items="${user.labels }" var="ul">${ul.lname },</c:forEach></p>
+	<div class="header" float="left">
+		<a href="">
+		<div class="col-md-1">
+			<img class="img-responsive" src="static/image/logo.png" width="45px;">
+		</div>
+		<div class="col-md-2 github_nav">
+			<span style="color:black;">大学生课外项目管理系统</span>
+		</div>
+		</a>
+		<div class="col-md-3"></div>
+		<div class="col-md-3">
+		<form class="form-inline" style="padding-top:5px;">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="检索用户项目">
+			</div>
+			<button type="submit" class="btn btn-default">搜索</button>
+		</form>
+		</div>
+		<div class="col-md-3" style="float:right;margin-top:5px;">
+			<a onclick="login();" class="btn">修改头像</a>
+			<a href="user/edit" class="btn">修改资料</a>
+			<a href="user/logout" class="btn">退出</a>
+		</div>
+	</div><br>
+	<div class="col-md-4 divLoginPop">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<form id="avatarForm" action="user/avatar" enctype="multipart/form-data" method="post" target="hidden_frame">
+					<input class="form-control" name="file" type="file">
+					<br>
+					<a onclick="avatar();" class="btn btn-info">修改</a>
+					<a onclick="unLogin();" class="btn btn-success" >取消</a>
+				</form>
+				</div>
+			</div>
+			</div>
+	<hr>
+	<div class="main">
+	<div class="col-md-2">
+		<a href="#"><img src="static/avatar/${user.avatar }" class="img-rounded" width="100%"></a>
+		<h2>${user.username }</h2>
+		<span>
+			<span style="cursor:pointer;" data-toggle="modal" data-target="#labelModal" class="glyphicon glyphicon-tags" aria-hidden="true"></span>&nbsp <c:forEach items="${user.labels }" var="ul">${ul.lname },</c:forEach>
+		</span>
+		<hr>
+		<div>
+			<ul class="info_ul">
+				<li>
+					<span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp ${user.stunum }
+				</li>
+				<li>
+					<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>&nbsp ${user.phone }
+				</li>
+				<li>
+					<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp ${user.email }
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="col-md-9">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#manager" data-toggle="tab">
+			管理的项目
+			<span class="badge">${mnum }</span>
+		</a></li>
+		<li><a href="#joined" data-toggle="tab">
+			参与的项目
+			<span class="badge">${jnum }</span>
+		</a></li>
+	</ul>
+	<div class="tab-content" style="margin-top:24px;">
+		<div class="tab-pane fade in active" id="manager">
+			
+			<c:forEach items="${mpros }" var="mpro">
+			<div class="col-md-4 repo_left" style="margin-bottom:0;">
+			<div class="panel panel-default panel-body">
+				<a href="project/info/${mpro.pid }">${mpro.pname }</a><br>
+				<span>项目状态：${mpro.statu }</span><br>
+				<span>活动日期：<time class="time">${mpro.stdate }</time></span>
+				<span class="destr">
+					${mpro.pdesc }
+				</span>
+				<span class="glyphicon glyphicon-tags" aria-hidden="true" style="font-size:16px;"></span>
+				<span>&nbsp <c:forEach items="${mpro.labels }" var="ul">${ul.lname },</c:forEach></span>
+			</div>
+			</div>
+			</c:forEach>
+		</div>
+		<div class="tab-pane fade" id="joined">
+			<c:forEach items="${jpros }" var="jpro">
+			<div class="col-md-4 repo_left">
+			<div class="panel panel-default panel-body">
+				<a href="project/info/${jpro.pid }">${jpro.pname }</a><br>
+				<span>项目状态：${jpro.statu }</span><br>
+				<span>活动日期：${jpro.stdate }</span>
+				<span class="destr">
+					${jpro.pdesc }
+				</span>
+				<span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+				<span>&nbsp <c:forEach items="${jpro.labels }" var="ul">${ul.lname },</c:forEach></span>
+			</div>
+			</div>
+			</c:forEach>
+		</div>
+		</div>
+	</div>
+	</div>
+	<script type="text/javascript" src="static/js/jquery-2.1.4.js"></script>
+	<script type="text/javascript" src="static/comp/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="static/js/pm.js"></script>
+	<script>
+		var times = $('time');
+		var tn = times.length;
+		for(var i=0;i<tn;i++){
+			var time = $(times[i]);
+			console.log('time = '+time.html());
+			var nd = new Date(time.html()*1000).toLocaleString().replace(/:\d{1,2}$/,' ').replace(/..午/,' ');
+			console.log(nd);
+			time.html(nd);
+		}
+	</script>
 </body>
 </html>

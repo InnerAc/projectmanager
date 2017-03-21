@@ -57,7 +57,7 @@
 		<a href="#"><img src="static/avatar/${me.avatar }" class="img-rounded" width="100%"></a>
 		<h2>${me.username }</h2>
 		<span>
-			<span class="glyphicon glyphicon-tags" aria-hidden="true"></span>&nbsp <c:forEach items="${me.labels }" var="ul">${ul.lname },</c:forEach>
+			<span style="cursor:pointer;" data-toggle="modal" data-target="#labelModal" class="glyphicon glyphicon-tags" aria-hidden="true"></span>&nbsp <c:forEach items="${me.labels }" var="ul">${ul.lname },</c:forEach>
 		</span>
 		<hr>
 		<div>
@@ -87,7 +87,12 @@
 	</ul>
 	<div class="tab-content" style="margin-top:24px;">
 		<div class="tab-pane fade in active" id="manager">
-			<p style="font-size:20px;"><a target="_blank" href="project/${me.uid }/add" class="btn btn-default">申请新项目<span class="glyphicon glyphicon-open-file"></span></a></p>
+			<p style="font-size:20px;">
+				<a target="_blank" href="project/${me.uid }/add" class="btn btn-default">申请新项目<span class="glyphicon glyphicon-open-file"></span></a>
+				<c:if test="${me.lvl > 0 }">
+				<a target="_blank" href="project/manager" class="btn btn-default">管理申请<span class="glyphicon glyphicon-open-file"></span></a>
+				</c:if>
+			</p>
 			
 			<c:forEach items="${mpros }" var="mpro">
 			<div class="col-md-4 repo_left" style="margin-bottom:0;">
@@ -123,6 +128,30 @@
 		</div>
 	</div>
 	</div>
+	<div class="modal fade" id="labelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">打标签</h4>
+			</div>
+			<div class="modal-body">
+				<p>标签添加后无法进行更改，请慎重选择！！</p><hr>
+				<p id="tagP"><c:forEach items="${me.labels }" var="ul"><a class="btn btn-default">${ul.lname }</a></c:forEach></p>
+				<hr>
+				<div id="tagBase">
+				<c:forEach items="${labels }" var="label">
+					<a class="btn btn-default" onclick="addTag(${me.uid },${label.lid},this)">${label.lname }</a>
+				</c:forEach>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+	</div>
+	<div id="labelIds" style="display:none"><c:forEach items="${me.labels }" var="ul">${ul.lid },</c:forEach></div>
 	<script type="text/javascript" src="static/js/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src="static/comp/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="static/js/pm.js"></script>
@@ -142,6 +171,27 @@
 			$('#avatarForm').submit();
 			unLogin();
 		}
+		function addTag(uid,lid,e){
+			lides = $('#labelIds').html().split(',');
+			for(var i=0;i<lides.length;i++){
+				if(lides[i] == lid){
+					alert("请不要重复添加！！");
+					$(e).remove();
+					return;
+				}
+			}
+			$.ajax({
+				url:'user/adl/'+uid+'/'+lid,
+				success:function(data){
+					var lname = $(e).html();
+					$('#tagP').append('<a class="btn btn-default">'+lname+'</a>');
+					$(e).remove();
+				},
+				error:function(){
+					alert("请不要重复添加！！");
+					$(e).remove();
+				}
+			});}
 	</script>
 </body>
 </html>

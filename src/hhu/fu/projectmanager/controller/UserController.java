@@ -46,6 +46,23 @@ public class UserController {
 		List<Label> labels = labelDAO.findAll();
 		model.addAttribute("user", user);
 		model.addAttribute("labels", labels);
+		
+		List<Project> mpros = projectDAO.findByUser(user);
+		List<Integer> pids = jointDAO.findByUser(user.getUid());
+		List<Project> jpros = projectDAO.findByIds(pids);
+		model.addAttribute("mpros", mpros);
+		model.addAttribute("jpros", jpros);
+		int mnum = 0;
+		int jnum = 0;
+		if(mpros != null){
+			mnum = mpros.size();
+		}
+		if(jpros != null){
+			jnum = jpros.size();
+		}
+		model.addAttribute("mnum", mnum);
+		model.addAttribute("jnum", jnum);
+		
 		return "user/info";
 	}
 
@@ -53,7 +70,6 @@ public class UserController {
 	public String me(Model model,HttpSession session){
 		System.out.println("welcome to me");
 		Object me = session.getAttribute("me");
-		System.out.println(model.asMap());
 		if(me == null){
 			model.addAttribute("info","请先登录");
 			model.addAttribute("url", "");
@@ -96,6 +112,7 @@ public class UserController {
 		User i_user = userDAO.findByName(user.getUserid());
 		if(i_user == null){
 			user.setAvatar("avatar.jpg");
+			user.setLvl(0);
 			userDAO.insert(user);
 			model.addAttribute("info", "注册成功");
 			model.addAttribute("url", "");
@@ -172,9 +189,11 @@ public class UserController {
 	
 	@RequestMapping("adl/{uid}/{lid}")
 	@ResponseBody
-	public String addLabel(@PathVariable int uid,@PathVariable int lid){
+	public String addLabel(@PathVariable int uid,@PathVariable int lid,HttpSession session){
 		Label label = labelDAO.findById(lid);
 		userDAO.addLabel(uid, label);
+		User me = userDAO.findById(uid);
+		session.setAttribute("me", me);
 		return "success";
 	}
 	

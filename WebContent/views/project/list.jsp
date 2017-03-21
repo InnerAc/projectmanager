@@ -26,12 +26,6 @@
 		</a>
 		<div class="col-md-4"></div>
 		<div class="col-md-3">
-		<form class="form-inline" style="padding-top:5px;" action="project/search" method="POST">
-			<div class="form-group">
-				<input type="text" name="pname" class="form-control" placeholder="Search">
-			</div>
-			<button type="submit" class="btn btn-default">搜索</button>
-		</form>
 		</div>
 		<div class="col-md-2 github_nav" style="float:right;">
 			<c:if test="${me==null }">
@@ -73,30 +67,22 @@
 	<div class="main">
 		<div class="row">
 			<div class="col-md-12">
-				<div id="myCarousel" class="carousel slide divCarousel">
-					<ol class="carousel-indicators">
-						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-						<li data-target="#myCarousel" data-slide-to="1"></li>
-						<li data-target="#myCarousel" data-slide-to="2"></li>
-					</ol>   
-					<div class="carousel-inner">
-						<div class="item active">
-							<img src="static/image/2.jpg" alt="First slide" class="img-responsive">
-						</div>
-						<div class="item">
-							<img src="static/image/2.jpg" alt="Second slide">
-						</div>
-						<div class="item">
-							<img src="static/image/2.jpg" alt="Third slide">
-						</div>
+			<center>
+				<form class="form-inline" action="project/search" method="POST">
+					<div class="form-group">
+						<input name="pname" type="text" class="form-control" placeholder="Search">
 					</div>
-					<a class="carousel-control left" href="#myCarousel" 
-					   data-slide="prev">&lsaquo;</a>
-					<a class="carousel-control right" href="#myCarousel" 
-					   data-slide="next">&rsaquo;</a>
-				</div> 
+					<div class="form-group">
+						<input type="checkbox" name="isjoin">无需批准
+					</div>
+					<div class="form-group">
+						<input type="radio" name="bynum" value="true">人数不足
+						<input type="radio" name="bynum" value="false">按照日期
+					</div>
+					<button type="submit" class="btn btn-default">搜索</button>
+				</form>
+			</center>
 			</div>
-			
 		</div>
 		<hr>
 		<div class="row">
@@ -128,27 +114,6 @@
 				</div>
 			</div>
 			</c:forEach>
-			
-
-			<div class="col-md-12">
-			<center>
-			<ul class="pagination">
-				<c:if test="${page != 1 }">
-				<li><a href="?p=${page-1 }">&laquo;</a></li>
-				</c:if>
-				<c:forEach var="p" begin="1" end="${pages }" step="1">
-					<li
-					<c:if test="${p eq page}">
-						class="active"
-					</c:if>
-					><a href="?p=${p }">${p }</a></li>
-				</c:forEach>
-				<c:if test="${page != pages }">
-					<li><a href="?p=${page+1 }">&raquo;</a></li>
-				</c:if>
-			</ul>
-			</center>
-			</div>
 		</div>
 	</div>
 	<script type="text/javascript" src="static/js/jquery-2.1.4.js"></script>

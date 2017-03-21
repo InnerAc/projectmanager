@@ -76,7 +76,7 @@
 				<img class="img-responsive" src="static/poster/${project.poster }">
 			</div>
 			<div class="col-md-4">
-				<label>举办人：${project.manager.username }</label><br>
+				<label>举办人：<a href="user/info/${project.manager.userid }">${project.manager.username }</a></label><br>
 				<label>活动日期：<time class="time">${project.stdate }</time></label><br>
 				<label>结束日期：<time class="time">${project.endate }</time></label><br>
 				<label>参与方式：
@@ -163,8 +163,9 @@
 		</div>
 	</div>
 	</div>
+	<div id="labelIds" style="display:none"><c:forEach items="${project.labels }" var="ul">${ul.lid },</c:forEach></div>
 	<iframe name="hidden_frame" id="hidden_frame" style="display:none;"></iframe>
-
+	
 	<script type="text/javascript" src="static/js/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src="static/comp/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="static/js/pm.js"></script>
@@ -177,6 +178,14 @@
 			$('#posterModal').modal('hide');
 		}
 		function addTag(pid,lid,e){
+			lides = $('#labelIds').html().split(',');
+			for(var i=0;i<lides.length;i++){
+				if(lides[i] == lid){
+					alert("请不要重复添加！！");
+					$(e).remove();
+					return;
+				}
+			}
 			$.ajax({
 				url:'project/adl/'+pid+'/'+lid,
 				success:function(data){

@@ -63,6 +63,17 @@ public class ProjectDAO extends BaseDAO<Project>{
 		Query<Project> projects = session.createQuery(hql,Project.class).setFirstResult(offset).setMaxResults(length);
 		return projects.list();
 	}
+	public List<Project> findForPageByDate(boolean isjoin){
+		open();
+		String hql = "";
+		if(isjoin){//需要审批
+			hql = "from Project where statu='准备中...' order by stdate";
+		}else {
+			hql = "from Project where statu='准备中...' and isjoin=false order by stdate";
+		}
+		Query<Project> projects = session.createQuery(hql,Project.class);
+		return projects.list();
+	}
 	
 	/**
 	 * 按照参与度
@@ -81,18 +92,29 @@ public class ProjectDAO extends BaseDAO<Project>{
 		Query<Project> projects = session.createQuery(hql,Project.class).setFirstResult(offset).setMaxResults(length);
 		return projects.list();
 	}
+	public List<Project> findForPageByNum(boolean isjoin){
+		open();
+		String hql = "";
+		if(isjoin){//需要审批
+			hql = "from Project where statu='准备中...' and joinnum < allnum order by allnum/joinnum";
+		}else {
+			hql = "from Project where statu='准备中...' and joinnum < allnum and isjoin=false order by allnum/joinnum";
+		}
+		Query<Project> projects = session.createQuery(hql,Project.class);
+		return projects.list();
+	}
 	
 	public List<Project> findByName(String name){
-		String hql = "from Project where pname like %?%";
+		String hql = "from Project where pname like :name";
 		open();
-		Query<Project> projects = session.createQuery(hql,Project.class).setParameter(0, name);
+		Query<Project> projects = session.createQuery(hql,Project.class).setParameter("name", "%"+name+"%");
 		return projects.list();
 	}
 	
 	public List<Project> findByNameUser(String name,User user){
-		String hql = "from Project where pname like %?% and manager=?";
+		String hql = "from Project where pname like :name and manager=:user";
 		open();
-		Query<Project> projects = session.createQuery(hql,Project.class).setParameter(0, name).setParameter(1, user);
+		Query<Project> projects = session.createQuery(hql,Project.class).setParameter("name", "%"+name+"%").setParameter("user", user);
 		return projects.list();
 	}
 	
@@ -171,5 +193,22 @@ public class ProjectDAO extends BaseDAO<Project>{
 		begin();
 		session.update(project);
 		commit();
+	}
+	
+	public void changeType(long ntime){
+		String hql = "update Project set statu='进行中' where statu='准备中...' and stdate < "+ntime;
+		open();
+		begin();
+		session.createQuery(hql).executeUpdate();
+		String hql2 = "update Project set statu='已结束' where statu='进行中' and endate < "+ntime;
+		session.createQuery(hql2).executeUpdate();
+		commit();
+	}
+	
+	public List<Project> findByStatu(String statu){
+		String hql = "from Project where statu = :statu";
+		open();
+		Query<Project> projects = session.createQuery(hql,Project.class).setParameter("statu", statu);
+		return projects.list();
 	}
 }

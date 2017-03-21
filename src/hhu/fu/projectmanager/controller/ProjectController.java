@@ -67,7 +67,7 @@ public class ProjectController {
 		}
 		User user = userDAO.findById(uid);
 		project.setManager(user);
-		project.setStatu("准备中...");
+		project.setStatu("申请中");
 		project.setJoinnum(0);
 		project.setPoster("defualt.jpg");
 		projectDAO.insert(project);
@@ -150,5 +150,46 @@ public class ProjectController {
 		project.joinOne();
 		projectDAO.update(project);
 		return "0";
+	}
+	
+	@RequestMapping(value="search",method = RequestMethod.GET)
+	public String search(Model model){
+		List<Project> projects = null;
+		projects = projectDAO.findForPageByDate(true);
+		model.addAttribute("projects",projects);
+		return "project/list";
+	}
+	
+	@RequestMapping(value="search",method = RequestMethod.POST)
+	public String search(String pname,boolean isjoin,boolean bydate,boolean bynum,Model model){
+		System.out.println(pname);
+		List<Project> projects = null;
+		if(pname != null){
+			projects = projectDAO.findByName(pname);
+		}else if(bynum){
+			projects = projectDAO.findForPageByNum(!isjoin);
+		}else{
+			projects = projectDAO.findForPageByDate(!isjoin);
+		}
+		model.addAttribute("projects",projects);
+		return "project/list";
+	}
+	@RequestMapping("manager")
+	public String manager(Model model,HttpSession session){
+		Object obj = session.getAttribute("me");
+		if(obj == null){
+			model.addAttribute("info","请先登录");
+			model.addAttribute("url", "");
+			return "error/errto";
+		}
+		User me = (User)obj;
+		if(me.getLvl() == 0){
+			model.addAttribute("info","请不要越权！！");
+			model.addAttribute("url", "");
+			return "error/errto";
+		}
+		List<Project> projects = projectDAO.findByStatu("申请中");
+		model.addAttribute("projects", projects);
+		return "project/manager";
 	}
 }
