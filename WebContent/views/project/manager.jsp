@@ -85,5 +85,17 @@
 	<script type="text/javascript">
 		timeChange();
 	</script>
+	<script>
+		function pass(e,pid){
+			$.get("project/pass/"+pid,function(data){
+				$(e).parent().html("已批准");
+			});
+		}
+		function deny(e,pid){
+			$.get("project/deny/"+pid,function(data){
+				$(e).parent().html("已驳回");
+			});
+		}
+	</script>
 </body>
 </html>

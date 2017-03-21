@@ -192,4 +192,28 @@ public class ProjectController {
 		model.addAttribute("projects", projects);
 		return "project/manager";
 	}
+	
+	@RequestMapping("pass/{pid}")
+	@ResponseBody
+	public String pass(@PathVariable int pid,HttpSession session){
+		Object obj = session.getAttribute("me");
+		User me = (User)obj;
+		if(me.getLvl() > 0){
+			projectDAO.updateStatu(pid, "准备中...");
+			return "success";
+		}
+		return "fail";
+	}
+	
+	@RequestMapping("deny/{pid}")
+	@ResponseBody
+	public String deny(@PathVariable int pid,HttpSession session){
+		Object obj = session.getAttribute("me");
+		User me = (User)obj;
+		if(me.getLvl() > 0){
+			projectDAO.updateStatu(pid, "准备中...");
+			return "success";
+		}
+		return "fail";
+	}
 }
