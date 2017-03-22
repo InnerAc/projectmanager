@@ -90,7 +90,7 @@
 			<p style="font-size:20px;">
 				<a target="_blank" href="project/${me.uid }/add" class="btn btn-default">申请新项目<span class="glyphicon glyphicon-open-file"></span></a>
 				<c:if test="${me.lvl > 0 }">
-				<a target="_blank" href="project/manager" class="btn btn-default">管理申请<span class="glyphicon glyphicon-open-file"></span></a>
+				<a target="_blank" href="project/manager" class="btn btn-default">管理申请 <span class="glyphicon glyphicon-tasks"></span></a>
 				</c:if>
 			</p>
 			
@@ -151,6 +151,7 @@
 		</div>
 	</div>
 	</div>
+	<iframe name="hidden_frame" id="hidden_frame" style="display:none;"></iframe>
 	<div id="labelIds" style="display:none"><c:forEach items="${me.labels }" var="ul">${ul.lid },</c:forEach></div>
 	<script type="text/javascript" src="static/js/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src="static/comp/bootstrap/dist/js/bootstrap.min.js"></script>

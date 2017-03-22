@@ -211,7 +211,7 @@ public class ProjectController {
 		Object obj = session.getAttribute("me");
 		User me = (User)obj;
 		if(me.getLvl() > 0){
-			projectDAO.updateStatu(pid, "准备中...");
+			projectDAO.updateStatu(pid, "已驳回");
 			return "success";
 		}
 		return "fail";

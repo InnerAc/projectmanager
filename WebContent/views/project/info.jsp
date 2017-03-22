@@ -94,7 +94,9 @@
 			</div>
 			<div class="col-md-2">
 				<c:if test="${me!=null }">
+				<c:if test="${project.statu eq '准备中...' }">
 				<button id="joinBtn" onclick="joinIt(${project.pid});" class="btn btn-success">报名</button><br><br>
+				</c:if>
 				<c:if test="${me.uid == project.manager.uid }">
 				<button class="btn btn-warning"  data-toggle="modal" data-target="#posterModal">上传海报</button><br><br>
 				<button onclick="$('#tagBase').toggle();" class="btn btn-info">添加标签</button><br><br>
