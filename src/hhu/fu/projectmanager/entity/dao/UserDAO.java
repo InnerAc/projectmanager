@@ -91,4 +91,11 @@ public class UserDAO extends BaseDAO<User>{
 		session.update(user);
 		commit();
 	}
+	
+	public List<User> findByLvl(int lvl){
+		String hql="from User where lvl=?";
+		open();
+		List<User> users = session.createQuery(hql,User.class).setParameter(0,lvl).list();
+		return users;
+	}
 }

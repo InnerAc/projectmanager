@@ -92,6 +92,9 @@
 				<c:if test="${me.lvl > 0 }">
 				<a target="_blank" href="project/manager" class="btn btn-default">管理申请 <span class="glyphicon glyphicon-tasks"></span></a>
 				</c:if>
+				<c:if test="${me.lvl > 1 }">
+				<a target="_blank" href="admin/manager" class="btn btn-default">教师管理 <span class="glyphicon glyphicon-users"></span></a>
+				</c:if>
 			</p>
 			
 			<c:forEach items="${mpros }" var="mpro">
