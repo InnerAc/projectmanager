@@ -197,4 +197,19 @@ public class UserController {
 		return "success";
 	}
 	
+	@RequestMapping("drop/{uid}")
+	@ResponseBody
+	public String drop(@PathVariable int uid){
+		userDAO.delete(uid);
+		return "success";
+	}
+	
+	@RequestMapping("repwd/{uid}")
+	@ResponseBody
+	public String repwd(@PathVariable int uid){
+		User user = userDAO.findById(uid);
+		user.setPassword("000000");
+		userDAO.update(user);
+		return "success";
+	}
 }

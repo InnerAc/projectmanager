@@ -16,15 +16,7 @@
 </head>
 <body>
 	<div class="header" float="left">
-		<a href="">
-		<div class="col-md-1">
-			<img class="img-responsive" src="static/image/logo.png" width="45px;">
-		</div>
-		<div class="col-md-2 github_nav">
-			<span style="color:black;">大学生课外项目管理系统</span>
-		</div>
-		</a>
-		<div class="col-md-6"></div>
+		<jsp:include page="../header.jsp"/><div class="col-md-3"></div>
 		<div class="col-md-3" style="float:right;margin-top:5px;">
 			<a onclick="login();" class="btn">修改头像</a>
 			<a href="user/edit" class="btn">修改资料</a>
@@ -55,7 +47,8 @@
 						<td>${user.username }</td>
 						<td>${user.sex }</td>
 						<td>${user.phone }</td>
-						<td><a>删除</a>&nbsp&nbsp<a>重置密码</a></td>
+						<td><a style="cursor:pointer;" onclick="drop(${user.uid},this);">删除</a>&nbsp&nbsp
+							<a style="cursor:pointer;" onclick="repwd(${user.uid},this);">重置密码</a></td>
 					</tr>
 					</c:forEach>
 				</tbody>
@@ -121,5 +114,17 @@
 	<iframe name="hidden_frame" id="hidden_frame" style="display:none;"></iframe>
 	<script type="text/javascript" src="static/js/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src="static/comp/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script>
+		function drop(uid,e){
+			$.get('user/drop/'+uid,function(data){
+				$(e).parent().parent().remove();
+			});
+		}
+		function repwd(uid,e){
+			$.get('user/repwd/'+uid,function(data){
+				alert('重置密码为"000000"成功，请及时修改');
+			});
+		}
+	</script>
 </body>
 </html>

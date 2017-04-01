@@ -16,17 +16,9 @@
 </head>
 <body>
 	<div class="header" float="left">
-		<a href="">
-		<div class="col-md-1">
-			<img class="img-responsive" src="static/image/logo.png" width="45px;">
-		</div>
-		<div class="col-md-2 github_nav">
-			<span style="color:black;">大学生课外项目管理系统</span>
-		</div>
-		</a>
-		<div class="col-md-3"></div>
+		<jsp:include page="../header.jsp"/><div class="col-md-2"></div>
 		<div class="col-md-3">
-		<form class="form-inline" style="padding-top:5px;">
+		<form class="form-inline" style="padding-top:5px;padding-left:-8.7%;">
 			<div class="form-group">
 				<input type="text" class="form-control" placeholder="检索用户项目">
 			</div>
