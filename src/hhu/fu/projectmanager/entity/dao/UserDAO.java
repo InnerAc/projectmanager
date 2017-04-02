@@ -102,4 +102,10 @@ public class UserDAO extends BaseDAO<User>{
 	public void deleteById(int uid){
 		User user = findById(uid);
 	}
+	public void delete(int uid){
+		User user = findById(uid);
+		begin();
+		session.delete(user);
+		commit();
+	}
 }

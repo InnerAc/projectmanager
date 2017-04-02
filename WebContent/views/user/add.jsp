@@ -16,14 +16,7 @@
 </head>
 <body>
 	<div class="header" float="left">
-		<a href="">
-		<div class="col-md-1">
-			<img class="img-responsive" src="static/image/logo.png" width="45px;">
-		</div>
-		<div class="col-md-2 github_nav">
-			<span style="color:black;">大学生课外项目管理系统</span>
-		</div>
-		</a>
+		<jsp:include page="../header.jsp"/>
 		<br>
 	</div>
 	<hr>
