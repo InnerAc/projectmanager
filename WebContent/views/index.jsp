@@ -80,15 +80,17 @@
 						<li data-target="#myCarousel" data-slide-to="2"></li>
 					</ol>   
 					<div class="carousel-inner">
-						<div class="item active">
-							<img src="static/image/2.jpg" alt="First slide" class="img-responsive">
+						<c:forEach items="${spro }" var="pro" varStatus="status">
+							<div class="item 
+							<c:if test="${status.index == 0 }">
+								active
+							</c:if>
+							">
+							<a href="project/info/${pro.pid }">
+							<img src="static/poster/${pro.poster }" alt="${pro.pname }" class="img-responsive">
+							</a>
 						</div>
-						<div class="item">
-							<img src="static/image/2.jpg" alt="Second slide">
-						</div>
-						<div class="item">
-							<img src="static/image/2.jpg" alt="Third slide">
-						</div>
+						</c:forEach>
 					</div>
 					<a class="carousel-control left" href="#myCarousel" 
 					   data-slide="prev">&lsaquo;</a>

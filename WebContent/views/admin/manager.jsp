@@ -121,5 +121,12 @@
 	<iframe name="hidden_frame" id="hidden_frame" style="display:none;"></iframe>
 	<script type="text/javascript" src="static/js/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src="static/comp/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		function drop(uid,e){
+			$.get('user/drop/'+uid,function(data){
+				$(e).parent().parent().remove();
+			});
+		}
+	</script>
 </body>
 </html>

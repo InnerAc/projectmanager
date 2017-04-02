@@ -98,4 +98,8 @@ public class UserDAO extends BaseDAO<User>{
 		List<User> users = session.createQuery(hql,User.class).setParameter(0,lvl).list();
 		return users;
 	}
+	
+	public void deleteById(int uid){
+		User user = findById(uid);
+	}
 }

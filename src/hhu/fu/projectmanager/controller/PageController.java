@@ -46,12 +46,14 @@ public class PageController {
 			model.addAttribute("me", null);
 		}
 		List<Project> projects = projectDAO.findForPageByDate(page-1, 6, true);
+		List<Project> spro = projectDAO.findForPageByNum(0, 3, true);
 		long ps = projectDAO.countByJoinableOrIsJoin(false, true);
 		System.out.println("ps ="+ps);
 		model.addAttribute("projects", projects);
 		model.addAttribute("page", page);
 		long pages = (ps-1)/6 +1;
 		model.addAttribute("pages", pages);
+		model.addAttribute("spro", spro);
 		return "index";
 	}
 	
