@@ -18,9 +18,9 @@
 	<div class="header" float="left">
 		<jsp:include page="../header.jsp"/><div class="col-md-3"></div>
 		<div class="col-md-3">
-		<form class="form-inline" style="padding-top:5px;">
+		<form class="form-inline" style="padding-top:5px;" action="project/search" method="POST">
 			<div class="form-group">
-				<input type="text" class="form-control" placeholder="Search">
+				<input type="text" name="pname" class="form-control" placeholder="Search">
 			</div>
 			<button type="submit" class="btn btn-default">搜索</button>
 		</form>

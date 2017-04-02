@@ -18,12 +18,6 @@
 	<div class="header" float="left">
 		<jsp:include page="../header.jsp"/><div class="col-md-2"></div>
 		<div class="col-md-3">
-		<form class="form-inline" style="padding-top:5px;padding-left:-8.7%;">
-			<div class="form-group">
-				<input type="text" class="form-control" placeholder="检索用户项目">
-			</div>
-			<button type="submit" class="btn btn-default">搜索</button>
-		</form>
 		</div>
 		<div class="col-md-3" style="float:right;margin-top:5px;">
 			<a onclick="login();" class="btn">修改头像</a>

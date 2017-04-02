@@ -103,7 +103,7 @@
 					</div>
 					<div class="panel-body divProject">
 						<div class="col-md-6">
-							<img class="img-responsive" src="static/image/2.jpg">
+							<img class="img-responsive" src="static/poster/${project.poster }">
 						</div>
 						<div class="col-md-6">
 							<label>举办人：${project.manager.username }</label><br>
