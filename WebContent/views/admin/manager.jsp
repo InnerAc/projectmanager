@@ -18,8 +18,7 @@
 	<div class="header" float="left">
 		<jsp:include page="../header.jsp"/><div class="col-md-3"></div>
 		<div class="col-md-3" style="float:right;margin-top:5px;">
-			<a onclick="login();" class="btn">修改头像</a>
-			<a href="user/edit" class="btn">修改资料</a>
+http://js.arcgis.com/3.6/
 			<a href="user/logout" class="btn">退出</a>
 		</div>
 	</div><br>

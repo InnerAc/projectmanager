@@ -164,11 +164,14 @@ public class ProjectController {
 	public String search(String pname,boolean isjoin,boolean bydate,boolean bynum,Model model){
 		System.out.println(pname);
 		List<Project> projects = null;
-		if(pname != null){
+		if(pname != null && !pname.equals("")){
+			System.out.println("!-------------1");
 			projects = projectDAO.findByName(pname);
 		}else if(bynum){
+			System.out.println("!-------------2");
 			projects = projectDAO.findForPageByNum(!isjoin);
 		}else{
+			System.out.println("!-------------3");
 			projects = projectDAO.findForPageByDate(!isjoin);
 		}
 		model.addAttribute("projects",projects);

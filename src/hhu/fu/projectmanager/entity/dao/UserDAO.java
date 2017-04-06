@@ -41,7 +41,9 @@ public class UserDAO extends BaseDAO<User>{
 	public User findByName(String uname){
 		String hql="from User where userid=?";
 		open();
-		User user = session.createQuery(hql,User.class).setParameter(0,uname).uniqueResult();
+//		User user = session.createQuery(hql, User.class).setParameter(0, uname).uniqueResult();
+		User user = session.createQuery(hql, User.class).setParameter(0, uname).uniqueResult();
+		
 		return user;
 	}
 	

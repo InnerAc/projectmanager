@@ -104,7 +104,7 @@
 			<div class="panel panel-default panel-body">
 				<a href="project/info/${jpro.pid }">${jpro.pname }</a><br>
 				<span>项目状态：${jpro.statu }</span><br>
-				<span>活动日期：${jpro.stdate }</span>
+				<span>活动日期：<time class="time">${jpro.stdate }</time></span>
 				<span class="destr">
 					${jpro.pdesc }
 				</span>
